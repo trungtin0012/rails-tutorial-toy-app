@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  include UsersHelper
+  #include UsersHelper
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   # GET /users
@@ -29,8 +29,9 @@ class UsersController < ApplicationController
 
     #respond_to do |format|
       if @user.save
+        log_in @user
         flash[:success] = "Welcome"
-        redirect_to @user
+        redirect_to user_path(@user)
         # format.html { redirect_to @user, notice: 'User was successfully created.' }
         # format.json { render :show, status: :created, location: @user }
       else
@@ -69,6 +70,7 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+      #debugger
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
